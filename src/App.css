@@ -1,3 +1,4 @@
+/* Reset and global styles */
 #root {
   max-width: 100%;
   margin: 0;
@@ -10,6 +11,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow-y: auto;
 }
 
 body {
@@ -17,8 +20,35 @@ body {
   padding: 0;
   background-color: #1a1a1a;
   min-height: 100vh;
+  font-family: 'Inter', sans-serif;
 }
 
+/* Spinner for loading quiz */
+.loading-quiz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Principal container */
 .speed-reader {
   min-height: 100vh;
   width: 100%;
@@ -31,20 +61,20 @@ body {
   position: relative;
 }
 
+/* Central content container */
 .content-wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 2rem;
   max-width: 800px;
   margin: 0 auto;
   padding: 1rem;
-  position: relative;
   background-color: #1a1a1a;
 }
 
+/* File upload section */
 .upload-section {
   width: 100%;
   max-width: 600px;
@@ -77,9 +107,16 @@ body {
   align-items: center;
   gap: 0.5rem;
   font-size: 0.9rem;
-  color: #ffffff;
+  color: #888;
 }
 
+.file-input-label svg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 0.5rem;
+}
+
+/* Reading info section */
 .reading-info {
   width: 100%;
   max-width: 600px;
@@ -95,9 +132,9 @@ body {
 .progress-text {
   margin: 0.5rem 0;
   font-size: 0.9rem;
-  color: #ffffff;
 }
 
+/* Reader section and word display */
 .reader-section {
   width: 100%;
   max-width: 800px;
@@ -106,10 +143,13 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+  margin-top: 2rem;
 }
 
+/* Contenedor de palabras con ancho fijo */
 .word-display {
-  width: 100%;
+  width: 600px;           /* Ancho fijo */
+  max-width: 100%;        /* Para que en pantallas pequeñas no se desborde */
   min-height: 150px;
   display: flex;
   align-items: center;
@@ -118,14 +158,39 @@ body {
   border-radius: 8px;
   padding: 2rem;
   box-sizing: border-box;
+  margin: 2rem auto;      /* Centrado horizontal */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .current-word {
   font-size: clamp(2rem, 5vw, 4rem);
   text-align: center;
   word-break: break-word;
+  font-weight: 500;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Progress bar */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #333;
+  border-radius: 4px;
+  margin: 1rem auto;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #4a90e2;
+  transition: width 0.3s ease;
+}
+
+/* Controls and buttons */
 .controls {
   width: 100%;
   display: flex;
@@ -146,170 +211,39 @@ body {
   transition: background-color 0.3s ease;
 }
 
+.control-button:hover {
+  background-color: #3a78c2;
+}
+
 .speed-control {
-  width: 400px;
+  width: 100%;
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
 }
 
-.speed-slider {
-  width: 100%;
-  margin: 0.5rem 0;
-}
-
-.progress-bar {
-  width: 100%;
-  height: 8px;
-  background-color: #333;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background-color: #4a90e2;
-  transition: width 0.3s ease;
-}
-
-/* Mobile Responsive Styles */
-@media (max-width: 768px) {
-  .content-wrapper {
-    padding: 0.5rem;
-  }
-
-  .file-input-label {
-    padding: 1rem;
-  }
-
-  .word-display {
-    min-height: 120px;
-    padding: 1rem;
-  }
-
-  .current-word {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-  }
-
-  .controls {
-    padding: 0.5rem;
-  }
-
-  .control-button {
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-  }
-}
-
-/* Tablet Responsive Styles */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .content-wrapper {
-    padding: 1rem;
-  }
-
-  .current-word {
-    font-size: clamp(2rem, 4.5vw, 3.5rem);
-  }
-}
-
-.reader-section {
-  margin-top: 2rem;
-}
-
-.word-display {
-  background: #1a1a1a;
-  padding: 2rem;
-  border-radius: 8px;
-  margin: 2rem 0;
-}
-
-.current-word {
-  font-size: 2.5rem;
-  font-weight: 500;
-  color: #ffffff;
+/* Indicador de velocidad con ancho fijo */
+.speed-control label {
+  display: block;
+  width: 150px;           /* Ancho fijo para el label */
+  margin: 0 auto;
   text-align: center;
-  min-height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.progress-bar {
-  width: 600px;
-  height: 8px;
-  background: #eee;
-  border-radius: 4px;
-  margin: 1rem auto;
-  overflow: hidden;
-  max-width: 100%;
-}
-
-.progress-fill {
-  height: 100%;
-  background: #646cff;
-  transition: width 0.3s ease;
-}
-
-.controls {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-  margin: 2rem 0;
-}
-
-.control-button {
-  background: #646cff;
-  color: white;
-  border: none;
-  padding: 0.8rem 2rem;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.control-button:hover {
-  background: #535bf2;
-}
-
-.speed-control {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 200px;
-  margin: 0 10px;
 }
 
 .speed-slider {
   width: 100%;
-  margin-top: 5px;
-}
-
-.stats {
-  margin-top: 2rem;
-  color: #ffffff;
-}
-
-.stats p {
   margin: 0.5rem 0;
 }
 
-.completion-time {
-  margin-top: 1rem;
-  font-size: 1.1rem;
-  color: #ffffff;
-  opacity: 0.8;
-}
-
+/* Quiz section */
 .quiz-section {
   margin: 2rem 0;
   padding: 2rem;
   background: #1a1a1a;
   border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  color: #ffffff;
 }
 
 .question-card {
@@ -318,7 +252,6 @@ body {
 }
 
 .question-card h3 {
-  color: #ffffff;
   margin-bottom: 1rem;
   font-size: 1.5rem;
 }
@@ -348,41 +281,50 @@ body {
   color: white;
 }
 
-.file-input-container {
-  border: 2px dashed #646cff;
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin: 1rem 0;
-  cursor: pointer;
-  transition: all 0.3s ease;
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 0.5rem;
+  }
+
+  .file-input-label {
+    padding: 1rem;
+  }
+
+  .word-display {
+    width: 90%;           /* Ocupa el 90% del ancho de pantalla */
+    padding: 1rem;
+  }
+
+  .current-word {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .controls {
+    padding: 0.5rem;
+  }
+
+  .control-button {
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .speed-control {
+    max-width: 90%;
+  }
+
+  .speed-control label {
+    width: 150px;         /* Se mantiene el ancho fijo */
+  }
 }
 
-.file-input-container:hover {
-  border-color: #535bf2;
-  background: rgba(100, 108, 255, 0.1);
-}
+/* Tablet Responsive Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .content-wrapper {
+    padding: 1rem;
+  }
 
-.file-input {
-  display: none;
-}
-
-.file-input-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: #888;
-}
-
-.file-input-label svg {
-  width: 24px;
-  height: 24px;
-  margin-bottom: 0.5rem;
-}
-
-.estimated-time {
-  font-size: 0.8rem;
-  color: #888;
-  margin-top: 0.5rem;
+  .current-word {
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+  }
 }
